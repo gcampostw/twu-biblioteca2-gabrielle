@@ -22,11 +22,14 @@ public class ArchiveTest {
     @Test
     public void shouldPrintListOfBooksWithDetails(){
         Book bible = new Book("Bible", "God", 0);
+        Book americanGods = new Book("American Gods", "Neil Gaiman", 2001);
         List<Book> books = new ArrayList<>();
         books.add(bible);
+        books.add(americanGods);
         Archive archive = new Archive(books);
-        String bookOne = String.join("\n", "Title | Author | Year", "Bible | God | 0");
-        assertEquals(bookOne, archive.listBooks());
+        String bookOne = String.join("\n", "Title | Author | Year", "Bible | God | 0",
+                "American Gods | Neil Gaiman | 2001");
+        assertEquals(bookOne, archive.listBooks(null));
     }
 
     @Test
@@ -39,7 +42,7 @@ public class ArchiveTest {
         books.add(americanGods);
         Archive archive = new Archive(books);
         String listOfBooks = String.join("\n", "Title | Author | Year", "American Gods | Neil Gaiman | 2001");
-        assertEquals(listOfBooks, archive.listBooks());
+        assertEquals(listOfBooks, archive.listBooks(null));
     }
 
     @Test
@@ -98,6 +101,35 @@ public class ArchiveTest {
         books.add(foundation);
         Archive archive = new Archive(books);
         assertEquals("That book is not available", archive.checkoutBook("Bible"));
+    }
+
+    @Test
+    public void shouldListMovies(){
+        Book bible = new Book("Bible", "God", 0);
+        Movie titanic = new Movie("Titanic", "James Cameron", 1997, 7);
+        Movie avatar = new Movie("Avatar", "James Cameron", 2009, 8);
+        List<Book> books = new ArrayList<>();
+        books.add(bible);
+        books.add(titanic);
+        books.add(avatar);
+        Archive archive = new Archive(books);
+        String bookOne = String.join("\n", "Title | Director | Year | Rating",
+                "Titanic | James Cameron | 1997 | 7",
+                "Avatar | James Cameron | 2009 | 8");
+        assertEquals(bookOne, archive.listMovies());
+    }
+
+    @Test
+    public void shouldNotPrintLentMovies(){
+        Movie titanic = new Movie("Titanic", "James Cameron", 1997, 7);
+        Movie avatar = new Movie("Avatar", "James Cameron", 2009, 8);
+        List<Book> books = new ArrayList<>();
+        titanic.checkOut();
+        books.add(titanic);
+        books.add(avatar);
+        Archive archive = new Archive(books);
+        String listOfBooks = String.join("\n", "Title | Director | Year | Rating", "Avatar | James Cameron | 2009 | 8");
+        assertEquals(listOfBooks, archive.listMovies());
     }
 
 }

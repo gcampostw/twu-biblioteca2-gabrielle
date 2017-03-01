@@ -2,6 +2,7 @@ package com.twu.biblioteca;
 
 import exceptions.BookNotFoundException;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 public class Archive {
@@ -19,14 +20,23 @@ public class Archive {
         return listOfBooks;
     }
 
-    public String listBooks(){
+    public String listBooks(String header) {
         String listOfBooks = "Title | Author | Year";
+        if(header != null){
+            listOfBooks = header;
+        }
         for (Book book: books) {
             if(!book.isCheckedOut()){
-                listOfBooks = String.join("\n", listOfBooks, book.toString());
+                if((header != null && book instanceof Movie) || (header == null && !(book instanceof Movie))){
+                    listOfBooks = String.join("\n", listOfBooks, book.toString());
+                }
             }
         }
         return listOfBooks;
+    }
+
+    public String listMovies(){
+        return listBooks("Title | Director | Year | Rating");
     }
 
     public boolean containsBook(Book book){
