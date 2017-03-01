@@ -60,7 +60,7 @@ public class MainMenu {
         if(validUserOptionInput(option)){
             switch (option){
                 case 1:
-                    System.out.println(this.archive.listBooks(null));
+                    System.out.println(this.archive.listBooks());
                     break;
                 case 2:
                     message = this.archive.checkoutBook(getBookChoice());

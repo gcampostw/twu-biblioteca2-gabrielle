@@ -20,14 +20,15 @@ public class Archive {
         return listOfBooks;
     }
 
-    public String listBooks(String header) {
-        String listOfBooks = "Title | Author | Year";
-        if(header != null){
-            listOfBooks = header;
+    private String listItens(String header){
+        String listOfBooks = header;
+        boolean listBooks = true;
+        if(header.contains("Rating")){
+            listBooks = false;
         }
         for (Book book: books) {
             if(!book.isCheckedOut()){
-                if((header != null && book instanceof Movie) || (header == null && !(book instanceof Movie))){
+                if((!listBooks && book instanceof Movie) || (listBooks && !(book instanceof Movie))){
                     listOfBooks = String.join("\n", listOfBooks, book.toString());
                 }
             }
@@ -35,8 +36,12 @@ public class Archive {
         return listOfBooks;
     }
 
+    public String listBooks() {
+        return listItens("Title | Author | Year");
+    }
+
     public String listMovies(){
-        return listBooks("Title | Director | Year | Rating");
+        return listItens("Title | Director | Year | Rating");
     }
 
     public boolean containsBook(Book book){

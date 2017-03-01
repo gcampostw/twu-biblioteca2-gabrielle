@@ -29,7 +29,7 @@ public class ArchiveTest {
         Archive archive = new Archive(books);
         String bookOne = String.join("\n", "Title | Author | Year", "Bible | God | 0",
                 "American Gods | Neil Gaiman | 2001");
-        assertEquals(bookOne, archive.listBooks(null));
+        assertEquals(bookOne, archive.listBooks());
     }
 
     @Test
@@ -42,7 +42,7 @@ public class ArchiveTest {
         books.add(americanGods);
         Archive archive = new Archive(books);
         String listOfBooks = String.join("\n", "Title | Author | Year", "American Gods | Neil Gaiman | 2001");
-        assertEquals(listOfBooks, archive.listBooks(null));
+        assertEquals(listOfBooks, archive.listBooks());
     }
 
     @Test
@@ -104,7 +104,7 @@ public class ArchiveTest {
     }
 
     @Test
-    public void shouldListMovies(){
+    public void shouldListOnlyMovies(){
         Book bible = new Book("Bible", "God", 0);
         Movie titanic = new Movie("Titanic", "James Cameron", 1997, 7);
         Movie avatar = new Movie("Avatar", "James Cameron", 2009, 8);
